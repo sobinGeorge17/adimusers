@@ -1,38 +1,54 @@
 <div class="custombody">
     <div class="container customcontainer">
-     <div class="row">
-         <div class="col-md-6">
-             <form class="customform" [formGroup]="loginform" (ngSubmit)="login()" >
-                 <h1 class="text-center">Login</h1>
-                 <hr>
-                 <div class="mb-3">
-                     <label for="email" class="form-label">Email</label>
-                     <input type="email" class="form-control" id="email" placeholder="Enter email" formControlName="email" name="email">
-                 </div>
-                 <div class="mb-3">
-                     <label for="password" class="form-label">Password</label>
-                     <input type="password" class="form-control" id="password" placeholder="Password" formControlName="password" name="password">
-                 </div>
-                 <div class="mb-3 form-check">
-                     <input type="checkbox" class="form-check-input" id="remember">
-                     <label class="form-check-label" for="remember">Remember password</label>
-                 </div>
-                 <div class="d-flex align-items-center justify-content-between">
-                     <div class="mb-3">
-                         <p class="mb-0"><a href="">Forgot Password?</a></p>
-                     </div>
-                     <div>
-                         <!-- <button type="submit" class="btn btn-primary">Login</button> -->
-                         <button mat-raised-button color="primary">Login</button>
-                     </div>
-                 </div>
-                 <hr class="w-100">
-                 <p class="text-center"><a href="#">Need an Account?Sign up!</a></p>
-                
-             </form>
- 
-         </div>
-     </div>
- </div> 
- </div>
- 
+        <div class="row">
+            <div class="col-md-6">
+                <form class="customform" [formGroup]="loginform" (ngSubmit)="login()">
+                    <div class="customHead">
+                        <h1 class="text-center">Login</h1>
+                    </div>
+                    <hr>
+                    <div class="customFormInput">
+                        <label>Email</label>
+                        <mat-form-field style="width: 100%">
+
+                            <!-- <mat-icon matPrefix color="primary">email</mat-icon> -->
+                            <!-- <mat-label>Email</mat-label> -->
+                            <input matInput formControlName="email" placeholder="Enter email address">
+                            <mat-error *ngIf="loginform.get('email')?.hasError('required')">Email is
+                                required</mat-error>
+                            <mat-error *ngIf="loginform.get('email')?.hasError('email')">Invalid email
+                                format</mat-error>
+                        </mat-form-field>
+                        <div class="mb-3">
+                            <label>Password</label>
+                            <mat-form-field style="width: 100%;">
+                                <!-- <mat-icon matPrefix color="primary">lock</mat-icon>
+                            <mat-label>Password</mat-label> -->
+                                <input matInput type="password" formControlName="password"
+                                    placeholder="Enter your password">
+                                <mat-error *ngIf="loginform.get('password')?.hasError('required')">Password is
+                                    required</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <!-- <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="remember">
+                        <label class="form-check-label" for="remember">Remember password</label>
+                    </div> -->
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div class="mb-3">
+                                <p class="mb-0"><a href="">Forgot Password?</a></p>
+                            </div>
+                            <div>
+                                <button type="submit" class="btn btn-primary">Login</button>
+                            </div>
+                        </div>
+
+                    </div>
+                    <hr class="w-100">
+                    <p class="text-center"><a href="#" [routerLink]="['/admin/registration']">Need an Account? Sign
+                            up!</a></p>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

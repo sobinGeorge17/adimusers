@@ -6,10 +6,10 @@
 }
 .customform {
     background-color: white;
-    width: 400px;
+    width: 500px;
     border: 1px solid #ccc;
     border-radius: 10px;
-    padding: 20px;
+    /* padding: 40px; */
     margin-top: 50px;
 }
 .custombody{
@@ -18,3 +18,19 @@
     height: 100%;
 
 }
+.custominput{
+    background-color: transparent;
+}
+.customFormInput{
+    padding: 20px;
+}
+.customHead{
+    padding-bottom: 10px;
+    padding-top: 30px;
+    text-align: center;
+    
+}
+.custombody h1{
+   font-size: xx-large;
+}
+

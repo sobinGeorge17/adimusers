@@ -1,20 +1,69 @@
-<div class="container-fluid">
-    <form >
-        <label>first name</label>
-        <input type="text">
-        <label>last name</label>
-        <input type="text">
-        <label>Email</label>
-        <input type="email">
-        <label>Role</label>
-        <input type="radio">
-        <label>Admin</label>
-        <input type="radio">
-        <label>Agent</label>
-        <label>admin</label>
-        <label>Password</label>
-        <input type="password">
-        <button>register</button>
+<div class="customDiv">
+    <div class="container-fluid d-flex justify-content-center align-items-center" style=" border-radius: 10px;">
+        <form class="col-md-6 p-5 bg-light rounded customForm1" [formGroup]="registrationForm"
+            (ngSubmit)="submitForm()">
+            <h1 class="text-center mb-4">Create Account</h1>
+         <hr>
+          
+            <div class="row mb-3">
+                <div class="col">
+                    <mat-form-field appearance="fill">
+                        <mat-label>First Name</mat-label>
+                        <input matInput formControlName="fname" placeholder="Enter your first name" type="text">
+                        <mat-error *ngIf="registrationForm.get('fname')?.hasError('required')">First name is
+                            required</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Last Name</mat-label>
+                        <input matInput formControlName="lname" placeholder="Enter your last name">
+                        <mat-error *ngIf="registrationForm.get('lname')?.hasError('required')">Last name is
+                            required</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
 
-    </form>
+            <mat-form-field style="width: 100%;">
+                <mat-label> <mat-icon color="primary"> email </mat-icon> Email</mat-label>
+                <input matInput formControlName="email">
+                <mat-error *ngIf="registrationForm.get('email')?.hasError('required')  ">Email is required</mat-error>
+                <mat-error *ngIf="registrationForm.get('email')?.hasError('email') ">Invalid email format</mat-error>
+            </mat-form-field>
+
+            <div class="row mb-3">
+                <div class="col">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Password</mat-label>
+                        <input matInput type="password" formControlName="password1" placeholder="Enter your password">
+                        <mat-error *ngIf="registrationForm.get('password1')?.hasError('required')">Password is
+                            required</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Confirm password</mat-label>
+                        <input matInput type="password" formControlName="password2" placeholder="Confirm your password">
+                        <mat-error *ngIf="registrationForm.get('password2')?.hasError('required')">Confirm password is
+                            required</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Role :
+                    <input class="form-check-input me-1" type="radio" name="role" id="admin" formControlName="role"
+                        value="admin">
+                    <label class="form-check-label" for="admin"> Admin</label>
+                    <input class="form-check-input me-1 ms-1" type="radio" name="role" id="agent" formControlName="role"
+                        value="agent">
+                    <label class="form-check-label" for="agent">Agent</label>
+                </label>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">Create Account</button>
+            <hr>
+            <p class="text-center"><a [routerLink]="['/admin/login']">Have an Account? Go to login</a></p>
+        </form>
+    </div>
 </div>
