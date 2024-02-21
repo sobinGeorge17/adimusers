@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from '../../../environments/environment';
+
 
 @Injectable({
   providedIn: 'root'
@@ -7,9 +9,14 @@ import { Injectable } from '@angular/core';
 export class ApiService {
 
   constructor(private http: HttpClient) { }
-  // api = 'http://localhost:3000/auth/login'
+  // api = 'http://localhost:3000/api/auth/login'
+  private endPoint  = 'auth/login'
+  api = environment.apiKey
 
-  post(data: any) {
-    return this.http.post('http://localhost:3000/auth/login', data)
+
+  post(data: object) {
+    const url = `${this.api}${this.endPoint}`
+    // console.log(url);
+    return this.http.post(url, data)
   }
 }

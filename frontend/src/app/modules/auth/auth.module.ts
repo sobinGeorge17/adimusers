@@ -6,6 +6,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RegistrationComponent } from './registration/registration.component';
 import { AuthRoutingModule } from './auth-routing.module';
 import { MaterialModule } from '../material/material.module';
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 
@@ -21,9 +23,8 @@ import { MaterialModule } from '../material/material.module';
     AuthRoutingModule,
     ReactiveFormsModule,
     MaterialModule,
-
-    
-    
+   
+   
   ]
 })
 export class AuthModule { }

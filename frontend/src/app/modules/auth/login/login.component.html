@@ -16,8 +16,8 @@
                             <input matInput formControlName="email" placeholder="Enter email address">
                             <mat-error *ngIf="loginform.get('email')?.hasError('required')">Email is
                                 required</mat-error>
-                            <mat-error *ngIf="loginform.get('email')?.hasError('email')">Invalid email
-                                format</mat-error>
+                            <mat-error *ngIf="loginform.get('email')?.hasError('email')">Please enter a valid email
+                                address</mat-error>
                         </mat-form-field>
                         <div class="mb-3">
                             <label>Password</label>
@@ -28,7 +28,16 @@
                                     placeholder="Enter your password">
                                 <mat-error *ngIf="loginform.get('password')?.hasError('required')">Password is
                                     required</mat-error>
+                                <mat-error *ngIf="loginform.get('password')?.hasError('minlength')">Password must have
+                                    a minimum length of 8
+                                </mat-error>
+                                <mat-error *ngIf="loginform.get('password')?.hasError('pattern')">
+                                    Password must be a alPhanumeric
+
+                                </mat-error>
+
                             </mat-form-field>
+
                         </div>
                         <!-- <div class="mb-3 form-check">
                         <input type="checkbox" class="form-check-input" id="remember">
@@ -48,6 +57,12 @@
                     <p class="text-center"><a href="#" [routerLink]="['/admin/registration']">Need an Account? Sign
                             up!</a></p>
                 </form>
+                <!-- Your login form -->
+
+                <div *ngIf="errorMessage" class="error-message">
+                    {{ errorMessage }}
+                </div>
+
             </div>
         </div>
     </div>

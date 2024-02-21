@@ -7,16 +7,23 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 
 import { HttpClientModule } from '@angular/common/http';
 
+import { ToastrModule } from 'ngx-toastr';
+
 @NgModule({
   declarations: [
     AppComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
-    HttpClientModule
-
-
+    AppRoutingModule, 
+    HttpClientModule,
+    ToastrModule.forRoot({
+      positionClass:'toast-center-center',
+      preventDuplicates:true,
+      timeOut:3000,
+      easing:'ease-in',
+      easeTime:1000
+    }),
   ],
   providers: [
     provideClientHydration(),
