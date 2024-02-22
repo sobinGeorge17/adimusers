@@ -3,11 +3,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from '../../../services/api/api.service';
 import { HttpErrorResponse } from '@angular/common/http';
 
-
-
-
-
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -16,7 +11,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class LoginComponent {
 
   errorMessage: string = ''
-  constructor(private fb: FormBuilder, private authservice: ApiService ) { }
+
+  constructor(private fb: FormBuilder, private authservice: ApiService) { }
 
   loginform = this.fb.group(
     {
@@ -33,22 +29,21 @@ export class LoginComponent {
           console.log("login sucess");
         }
       }, (error: HttpErrorResponse) => {
-        // console.log(error);
         if (error.status === 401) {
-         
-          // this.toastrService.showSucess(error.error.data.error.message,'error')
           this.errorMessage = error.error.data.error.message
-          // this.showError()
-        } else {
-          this.showError("an error occured , please try again later")
+        } else if (error.status === 404) {
+          this.errorMessage = error.error.data.error.message
         }
-
+        else if (error.status === 422) {
+          this.errorMessage = error.error.data.error.message
+        }
+        else {
+          this.errorMessage = "an error occured , please try again later"
+        }
       });
     }
   }
 
-  showError(message: string) {
-    console.error("error", message)
-  }
+
 
 }
