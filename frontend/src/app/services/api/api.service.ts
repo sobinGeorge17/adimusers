@@ -11,7 +11,7 @@ export class ApiService {
   constructor(private http: HttpClient) { }
   // api = 'http://localhost:3000/api/auth/login'
   private endPoint  = 'auth/login'
-  api = environment.apiKey
+  api = environment?.baseurl
 
 
   post(data: object) {

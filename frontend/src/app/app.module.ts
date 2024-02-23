@@ -5,17 +5,11 @@ import { AppComponent } from './app.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
-
-
-
-
+import { HeadsectionComponent } from './components/headsection/headsection.component';
 
 @NgModule({
   declarations: [
-    AppComponent,
-   
-   
-    
+    AppComponent
   ],
   imports: [
     BrowserModule,

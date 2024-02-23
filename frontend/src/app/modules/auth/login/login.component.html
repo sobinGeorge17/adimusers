@@ -7,14 +7,11 @@
                         <h1 class="text-center">Login</h1>
                     </div>
                     <hr>
-                    <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
-                        {{ errorMessage }}
-                    </div>
+
 
                     <div class="customFormInput">
                         <label>Email</label>
                         <mat-form-field style="width: 100%">
-
                             <!-- <mat-icon matPrefix color="primary">email</mat-icon> -->
                             <!-- <mat-label>Email</mat-label> -->
                             <input matInput formControlName="email" placeholder="Enter email address">
@@ -28,8 +25,10 @@
                             <mat-form-field style="width: 100%;">
                                 <!-- <mat-icon matPrefix color="primary">lock</mat-icon>
                             <mat-label>Password</mat-label> -->
-                                <input matInput type="password" formControlName="password"
-                                    placeholder="Enter your password">
+                            <input matInput placeholder="Password" [type]="hide ? 'password' : 'text'" formControlName="password" required>
+                            <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                <!-- <input matInput type="password" formControlName="password"
+                                    placeholder="Enter your password"> -->
                                 <mat-error *ngIf="loginform.get('password')?.hasError('required')">Password is
                                     required</mat-error>
                                 <mat-error *ngIf="loginform.get('password')?.hasError('minlength')">Password must have
@@ -51,6 +50,11 @@
                             <div class="mb-3">
                                 <p class="mb-0"><a href="">Forgot Password?</a></p>
                             </div>
+                            <div class="error-message" *ngIf="errorMessage">
+                                <p class="alert alert-danger custompara" role="alert">
+                                    {{ errorMessage }}
+                                </p>
+                            </div>
                             <div>
                                 <button type="submit" class="btn btn-primary">Login</button>
                             </div>
@@ -61,6 +65,7 @@
                     <p class="text-center"><a href="#" [routerLink]="['/admin/registration']">Need an Account? Sign
                             up!</a></p>
                 </form>
+
             </div>
 
         </div>

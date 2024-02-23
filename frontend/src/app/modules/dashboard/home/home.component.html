@@ -1,17 +1,15 @@
-<app-navbar (sidenavToggle)="toggleSidenav($event)"></app-navbar>
+<app-headsection (sidenavToggle)="toggleSidenav()" class="headersection"></app-headsection>
 
-
+<!-- <app-navbar ></app-navbar> -->
 <!-- <app-table></app-table> -->
 <!-- <button (click)="sidenav.toggle()">Toggle</button> -->
-<mat-sidenav-container>
-    
-    <mat-sidenav #sidenav mode="side">
+
+<mat-sidenav-container>  
+    <mat-sidenav #sidenav mode="side" class="customsidebar1">
         <app-sidebar></app-sidebar>
     </mat-sidenav>
-    <mat-sidenav-content>
+    <mat-sidenav-content class="customcontent">
         <app-table></app-table>
-        <!-- <button (click)="opened = !opened">Toggle </button> -->
-        
+        <!-- <button (click)="opened = !opened">Toggle </button>   -->
     </mat-sidenav-content>
-
 </mat-sidenav-container>

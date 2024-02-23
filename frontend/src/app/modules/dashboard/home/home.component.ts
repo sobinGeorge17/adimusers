@@ -10,11 +10,11 @@ export class HomeComponent {
 
   @ViewChild('sidenav') sidenav!:MatSidenav
   
-  toggleSidenav(opened: boolean) { 
-    if (opened) {
-      this.sidenav.open();
-    } else {
+  toggleSidenav() { 
+    if (this.sidenav.opened) {
       this.sidenav.close();
+    } else {
+      this.sidenav.open();
     }
   }
 

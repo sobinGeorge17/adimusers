@@ -9,6 +9,8 @@ import { TableComponent } from './table/table.component';
 import { MaterialModule } from '../material/material.module';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FormsModule } from '@angular/forms';
+import { HeadsectionComponent } from '../../components/headsection/headsection.component';
+
 
 
 
@@ -19,9 +21,8 @@ import { FormsModule } from '@angular/forms';
     SidebarComponent,
     TableComponent,
     NavbarComponent,
+    HeadsectionComponent,
    
-    
-  
   ],
   imports: [
     CommonModule,

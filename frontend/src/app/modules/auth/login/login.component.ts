@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from '../../../services/api/api.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-login',
@@ -9,10 +11,11 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
+  hide = true;
 
   errorMessage: string = ''
 
-  constructor(private fb: FormBuilder, private authservice: ApiService) { }
+  constructor(private fb: FormBuilder, private authservice: ApiService , private router:Router) { }
 
   loginform = this.fb.group(
     {
@@ -24,20 +27,22 @@ export class LoginComponent {
   login() {
     if (this.loginform.valid) {
       this.authservice.post(this.loginform.value).subscribe((response: any) => {
-        console.log(response, 'response');
         if (response.status == "true") {
           console.log("login sucess");
+          if(response.data.user.accessToken){
+            localStorage.setItem('token',response.data.user?.accessToken)
+          }
+          if(response.data.user?.role){
+            localStorage.setItem('role',response.data.user?.role)
+          }
+          if(response.data.user?.role === 'admin'){
+            this.router.navigate(['/home/admin/home'])
+          }
         }
       }, (error: HttpErrorResponse) => {
-        if (error.status === 401) {
+        if(error?.status === 401 || error?.status === 404 || error?.status === 422){
           this.errorMessage = error.error.data.error.message
-        } else if (error.status === 404) {
-          this.errorMessage = error.error.data.error.message
-        }
-        else if (error.status === 422) {
-          this.errorMessage = error.error.data.error.message
-        }
-        else {
+        }else{
           this.errorMessage = "an error occured , please try again later"
         }
       });
