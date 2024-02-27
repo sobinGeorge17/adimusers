@@ -9,9 +9,7 @@ mat-sidenav mat-sidenav-content {
 }
 
 mat-sidenav {
-    background-color: #343a40;
-    width: 200px;
-   
+    background-color: #212529;
 }
 
 /* .customul {

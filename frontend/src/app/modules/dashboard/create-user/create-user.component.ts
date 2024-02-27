@@ -1,24 +1,29 @@
 import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ApiService } from '../../../services/api/api.service';
+import { error } from 'console';
 
 @Component({
-  selector: 'app-registration',
-  templateUrl: './registration.component.html',
-  styleUrl: './registration.component.css'
+  selector: 'app-create-user',
+  templateUrl: './create-user.component.html',
+  styleUrl: './create-user.component.css'
 })
-export class RegistrationComponent {
-  constructor(private fb: FormBuilder) { }
+export class CreateUserComponent {
+
+  private endPoint = 'admin/users'
+  private token = localStorage.getItem('token')
+  constructor(private fb :FormBuilder ,private registerService:ApiService){}
   hide1 = true
   hide2=true
 
   registrationForm = this.fb.group(
     {
-      fname: ['', [Validators.required]],
-      lname: ['', [Validators.required]],
+      firstName: ['', [Validators.required]],
+      lastName: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       role: ['', [this.roleValidator]],
-      password1: ['', [Validators.required, Validators.minLength(8), Validators.pattern('^[a-zA-Z0-9]{3,30}$')]],
-      password2: ['', [Validators.required]]
+      password1: ['', [Validators.required]],
+      password: ['', [Validators.required]]
     },
     {
       validators: this.passwordMatchValidator
@@ -28,10 +33,10 @@ export class RegistrationComponent {
     return this.registrationForm.get('role')
   }
   get firstName(){
-    return this.registrationForm.get('fname')
+    return this.registrationForm.get('firstName')
   }
   get lastName(){
-    return this.registrationForm.get('lname')
+    return this.registrationForm.get('lastName')
   }
   get email(){
     return this.registrationForm.get('email')
@@ -40,7 +45,7 @@ export class RegistrationComponent {
     return this.registrationForm.get('password1')
   }
   get password2() {
-    return this.registrationForm.get('password2')
+    return this.registrationForm.get('password')
   }
   
 
@@ -54,7 +59,7 @@ export class RegistrationComponent {
 
   passwordMatchValidator(form: FormGroup) {
     const password1 = form.get('password1')
-    const password2 = form.get('password2')
+    const password2 = form.get('password')
     if (password1 && password2 && password1.value !== password2.value && password2.value !=='') {
       password2?.setErrors({ passwordMismatch: true })
     } else {
@@ -66,10 +71,21 @@ export class RegistrationComponent {
 
   submitForm() {
     if (this.registrationForm.valid) {
-      console.log(this.registrationForm.value);
+      // console.log(this.registrationForm.value);
+      const {password1,...formData} = this.registrationForm.value
+      console.log(formData);
+      
+      this.registerService.posts(formData,this.endPoint,this.token).subscribe((res)=>{
+        console.log(res);
+      },(error)=>{
+        console.log(error,"eror");
+        
+      })
     } else {
       this.registrationForm.markAllAsTouched()
     }
   }
+
+
 
 }

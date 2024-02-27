@@ -5,13 +5,7 @@
     width: auto;
 }
 
-.customDiv {
-    background-color: #1877F2;
-    height: auto;
-    padding: 30px;
 
-
-}
 
 a{
     text-decoration: none;
@@ -21,9 +15,3 @@ a:hover{
     text-decoration: underline;
 }
 
-@media (max-width:603px) {
-
-    mat-form-field {
-        width: 100%;
-    }
-}

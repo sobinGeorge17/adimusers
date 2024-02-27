@@ -14,6 +14,7 @@ export class LoginComponent {
   hide = true;
 
   errorMessage: string = ''
+  private endPoint  = 'auth/login'
 
   constructor(private fb: FormBuilder, private authservice: ApiService , private router:Router) { }
 
@@ -26,17 +27,17 @@ export class LoginComponent {
 
   login() {
     if (this.loginform.valid) {
-      this.authservice.post(this.loginform.value).subscribe((response: any) => {
+      this.authservice.post(this.loginform.value,this.endPoint).subscribe((response: any) => {
         if (response.status == "true") {
           console.log("login sucess");
-          if(response.data.user.accessToken){
+          if(response.data.user?.accessToken){
             localStorage.setItem('token',response.data.user?.accessToken)
           }
           if(response.data.user?.role){
             localStorage.setItem('role',response.data.user?.role)
           }
           if(response.data.user?.role === 'admin'){
-            this.router.navigate(['/home/admin/home'])
+            this.router.navigate(['/dashboard'])
           }
         }
       }, (error: HttpErrorResponse) => {

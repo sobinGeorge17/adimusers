@@ -8,6 +8,7 @@ import { AuthRoutingModule } from './auth-routing.module';
 import { MaterialModule } from '../material/material.module';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 
 
@@ -15,7 +16,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 @NgModule({
   declarations: [
     LoginComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    ForgotPasswordComponent
   ],
   imports: [
     CommonModule,

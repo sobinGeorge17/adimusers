@@ -8,8 +8,10 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { TableComponent } from './table/table.component';
 import { MaterialModule } from '../material/material.module';
 import { NavbarComponent } from './navbar/navbar.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HeadsectionComponent } from '../../components/headsection/headsection.component';
+import { CreateUserComponent } from './create-user/create-user.component';
+
 
 
 
@@ -22,13 +24,17 @@ import { HeadsectionComponent } from '../../components/headsection/headsection.c
     TableComponent,
     NavbarComponent,
     HeadsectionComponent,
+    CreateUserComponent,
+  
+   
    
   ],
   imports: [
     CommonModule,
     DashboardRoutingModule,
     MaterialModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class DashboardModule { }

@@ -1,0 +1,97 @@
+<!-- <h2 mat-dialog-title>Create a User  </h2> -->
+<mat-dialog-content class="mat-typography customcontent">
+    <div class="container-fluid d-flex justify-content-center align-items-center customDiv"
+        style=" border-radius: 10px;">
+        <form class="col-md-6 p-3 bg-light rounded customForm1" [formGroup]="registrationForm"
+            (ngSubmit)="submitForm()">
+            <h1 class="text-center ">Create User</h1>
+            <hr>
+
+            <div class="row ">
+                <div class="col">
+                    <mat-form-field appearance="fill">
+                        <mat-label>First Name</mat-label>
+                        <input matInput formControlName="firstName" placeholder="Enter your first name" type="text">
+                        <mat-error *ngIf="firstName?.hasError('required')">First name is
+                            required</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Last Name</mat-label>
+                        <input matInput formControlName="lastName" placeholder="Enter your last name">
+                        <mat-error *ngIf="lastName?.hasError('required')">Last name is
+                            required</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <mat-form-field style="width: 100%;">
+                <mat-label> <mat-icon color="primary"> email </mat-icon> Email</mat-label>
+                <input matInput formControlName="email">
+                <mat-error *ngIf="email?.hasError('required')  ">Email is required</mat-error>
+                <mat-error *ngIf="email?.hasError('email') ">Invalid email format</mat-error>
+            </mat-form-field>
+
+            <div class="row ">
+                <div class="col">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Password</mat-label>
+                        <input matInput placeholder="Enter your password" [type]="hide1 ? 'password' : 'text'"
+                            formControlName="password1" required>
+                        <mat-icon matSuffix (click)="hide1 = !hide1">{{hide1 ? 'visibility_off' :
+                            'visibility'}}</mat-icon>
+                        <mat-error *ngIf="password1?.hasError('required')">Password is required</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Confirm password</mat-label>
+                        <input matInput placeholder="Enter your password" [type]="hide2 ? 'password' : 'text'"
+                            formControlName="password" required>
+                        <mat-icon matSuffix (click)="hide2 = !hide2">{{hide2 ? 'visibility_off' :
+                            'visibility'}}</mat-icon>
+                        <mat-error *ngIf="password2?.hasError('required')">Confirm password is required</mat-error>
+                        <mat-error *ngIf="password2?.hasError('passwordMismatch') && (password2?.touched)">Passwords do
+                            not match</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+
+            <div class="">
+                <label class="form-label">Role :
+                    <input class="form-check-input me-1" type="radio" name="role" id="admin" formControlName="role"
+                        value="admin">
+                    <label class="form-check-label" for="admin"> Admin</label>
+                    <input class="form-check-input me-1 ms-1" type="radio" name="role" id="agent" formControlName="role"
+                        value="agent">
+                    <label class="form-check-label" for="agent">Agent</label>
+                    <input class="form-check-input me-1 ms-1" type="radio" name="role" id="supervisor"
+                        formControlName="role" value="supervisor">
+                    <label class="form-check-label" for="supervisor">Supervisor</label>
+                    <input class="form-check-input me-1 ms-1" type="radio" name="role" id="qa" formControlName="role"
+                        value="qa">
+                    <label class="form-check-label" for="qa">QA</label>
+                    <input class="form-check-input me-1 ms-1" type="radio" name="role" id="qc" formControlName="role"
+                        value="qc">
+                    <label class="form-check-label" for="qc">QC</label>
+                </label>
+                <mat-error *ngIf="role?.hasError('required') ">Role is required</mat-error>
+                <mat-error *ngIf="role?.hasError('invalidRole') && role?.touched">Please select a valid role</mat-error>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">Create Account</button>
+        </form>
+    </div>
+
+
+</mat-dialog-content>
+
+
+
+
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Close</button>
+    <button mat-button [mat-dialog-close]="true" cdkFocusInitial>dfdf</button>
+</mat-dialog-actions>

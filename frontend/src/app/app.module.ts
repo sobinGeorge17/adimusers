@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
-import { HeadsectionComponent } from './components/headsection/headsection.component';
+
 
 @NgModule({
   declarations: [
@@ -14,14 +14,7 @@ import { HeadsectionComponent } from './components/headsection/headsection.compo
   imports: [
     BrowserModule,
     AppRoutingModule, 
-    HttpClientModule,
-    ToastrModule.forRoot({
-      positionClass:'toast-center-center',
-      preventDuplicates:true,
-      timeOut:3000,
-      easing:'ease-in',
-      easeTime:1000
-    }),
+    HttpClientModule
   ],
   providers: [
     provideClientHydration(),

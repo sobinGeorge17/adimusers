@@ -2,6 +2,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-top: 12px;
 }
 
 .header-left {
@@ -13,7 +14,7 @@
 .customTable {
     width: 100%;
     border-radius: 2px;
-    border: 3px solid rgb(141, 137, 137);
+    /* border: 3px solid rgb(141, 137, 137); */
 }
 
 .mat-form-field {
@@ -26,4 +27,14 @@
     border-radius: 4px;
     background-color: #fff;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.customTable .odd-row {
+    background-color: #f0f0f0;
+   
+}
+
+.customTable .even-row {
+    background-color: #ffffff;
+    
 }
