@@ -21,7 +21,7 @@ export class ApiService {
   }
 
   // to create user
-  posts(data: object, endpoint: string, token: any) {
+  posts(data: object, endpoint: string, token?: any) {
     const url = `${this.api}${endpoint}`
     const headers = new HttpHeaders(
       {
@@ -29,9 +29,18 @@ export class ApiService {
         'Authorization': `Bearer ${token}`
       }
     )
-    console.log(headers);
-    
     return this.http.post(url, data, { headers: headers })
   }
 
+  // to list the users
+  get(endpoint:string,token?:any){
+    const url = `${this.api}${endpoint}`
+    const headers = new HttpHeaders(
+      {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    )
+    return this.http.get(url,{headers:headers})
+  }
 }

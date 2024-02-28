@@ -38,6 +38,8 @@ export class LoginComponent {
           }
           if(response.data.user?.role === 'admin'){
             this.router.navigate(['/dashboard'])
+          }else{
+            this.router.navigate(['/dashboard/users'])
           }
         }
       }, (error: HttpErrorResponse) => {

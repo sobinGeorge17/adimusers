@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 })
 export class HeadsectionComponent {
   @Output() sidenavToggle = new EventEmitter()
+  isNavCollapsed = true;
   constructor (private router:Router){}
 
   toggleSidenav(){

@@ -1,56 +1,78 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChange, SimpleChanges, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { ApiService } from '../../../services/api/api.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
+export interface UserData {
+  id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  role: string;
 }
+
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
-  styleUrl: './table.component.css'
+  styleUrls: ['./table.component.css']
 })
-export class TableComponent implements AfterViewInit{
+export class TableComponent implements AfterViewInit, OnInit {
+  endpoint = 'admin/users';
+  data: UserData[] = [];
+  token = localStorage.getItem('token');
+  errorMessage!: string
 
-  ELEMENT_DATA : PeriodicElement[] = [
-    {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-    {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-    {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-    {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-    {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-    {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-    {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-    {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-    {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-    {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-    {position: 11, name: 'Sodium', weight: 22.9897, symbol: 'Na'},
-    {position: 12, name: 'Magnesium', weight: 24.305, symbol: 'Mg'},
-    {position: 13, name: 'Aluminum', weight: 26.9815, symbol: 'Al'},
-    {position: 14, name: 'Silicon', weight: 28.0855, symbol: 'Si'},
-    {position: 15, name: 'Phosphorus', weight: 30.9738, symbol: 'P'},
-    {position: 16, name: 'Sulfur', weight: 32.065, symbol: 'S'},
-    {position: 17, name: 'Chlorine', weight: 35.453, symbol: 'Cl'},
-    {position: 18, name: 'Argon', weight: 39.948, symbol: 'Ar'},
-    {position: 19, name: 'Potassium', weight: 39.0983, symbol: 'K'},
-    {position: 20, name: 'Calcium', weight: 40.078, symbol: 'Ca'},
-  ];
+  displayedColumns: string[] = ['id', 'firstName', 'lastName', 'email', 'role', 'edit', 'delete'];
+  dataSource = new MatTableDataSource<UserData>(this.data);
 
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  dataSource = new MatTableDataSource<PeriodicElement>(this.ELEMENT_DATA);
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator
+  constructor(private service: ApiService) { }
+
+  ngOnInit(): void {
+    this.fetchData()
+  }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
   }
+
+
+  fetchData() {
+    this.service.get(this.endpoint, this.token).subscribe((res: any) => {
+      if (res?.status === 'true') {
+        this.data = res?.data?.users;
+        this.dataSource.data = this.data;
+      } else {
+        console.error('Failed to fetch users:', res.message);
+      }
+    }, (error: HttpErrorResponse) => {
+      if (error?.status === 400 || error?.status === 401 || error?.status === 403 ||
+        error?.status === 404 || error?.status === 500) {
+        this.errorMessage = error.error.data.error.message
+      } else {
+        this.errorMessage = "an error occured , please try again later"
+      }
+      console.error('Error fetching users:', error);
+    });
+
+  }
+
+
+
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
+  editUser(user: UserData) {
+    // Handle edit logic here
+    console.log('Editing user:', user);
+  }
+
+  deleteUser(user: UserData) {
+    // Handle delete logic here
+    console.log('Deleting user:', user);
+  }
 }
-
-

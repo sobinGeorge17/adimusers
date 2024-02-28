@@ -11,6 +11,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HeadsectionComponent } from '../../components/headsection/headsection.component';
 import { CreateUserComponent } from './create-user/create-user.component';
+import { UserHomeComponent } from './user-home/user-home.component';
 
 
 
@@ -25,6 +26,7 @@ import { CreateUserComponent } from './create-user/create-user.component';
     NavbarComponent,
     HeadsectionComponent,
     CreateUserComponent,
+    UserHomeComponent,
   
    
    

@@ -4,10 +4,16 @@
         style=" border-radius: 10px;">
         <form class="col-md-6 p-3 bg-light rounded customForm1" [formGroup]="registrationForm"
             (ngSubmit)="submitForm()">
+            <div class="error-message customError" *ngIf="errorMessage">
+                <p class="alert alert-danger custompara" role="alert">
+                    {{ errorMessage }}
+                </p>
+            </div>
             <h1 class="text-center ">Create User</h1>
             <hr>
 
             <div class="row ">
+
                 <div class="col">
                     <mat-form-field appearance="fill">
                         <mat-label>First Name</mat-label>
@@ -42,6 +48,9 @@
                         <mat-icon matSuffix (click)="hide1 = !hide1">{{hide1 ? 'visibility_off' :
                             'visibility'}}</mat-icon>
                         <mat-error *ngIf="password1?.hasError('required')">Password is required</mat-error>
+                        <mat-error *ngIf="password1?.hasError('minlength')">
+                            a minimum length of 8 is required
+                        </mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col">
@@ -51,8 +60,8 @@
                             formControlName="password" required>
                         <mat-icon matSuffix (click)="hide2 = !hide2">{{hide2 ? 'visibility_off' :
                             'visibility'}}</mat-icon>
-                        <mat-error *ngIf="password2?.hasError('required')">Confirm password is required</mat-error>
-                        <mat-error *ngIf="password2?.hasError('passwordMismatch') && (password2?.touched)">Passwords do
+                        <mat-error *ngIf="password?.hasError('required')">Confirm password is required</mat-error>
+                        <mat-error *ngIf="password?.hasError('passwordMismatch') && (password?.touched)">Passwords do
                             not match</mat-error>
                     </mat-form-field>
                 </div>
@@ -80,18 +89,28 @@
                 <mat-error *ngIf="role?.hasError('required') ">Role is required</mat-error>
                 <mat-error *ngIf="role?.hasError('invalidRole') && role?.touched">Please select a valid role</mat-error>
             </div>
+            <mat-dialog-actions align="center">
+                <button mat-raised-button color="primary" type="submit">create Account</button>
+                <button mat-raised-button mat-dialog-close color="warn">Close</button>
+                <!-- <button type="submit" class="btn btn-primary w-100">Create Account</button> -->
 
-            <button type="submit" class="btn btn-primary w-100">Create Account</button>
+            </mat-dialog-actions>
+
+
         </form>
     </div>
 
+    <!-- sucesss Msg  -->
+    <div class="toast" *ngIf="successMsg" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <strong class="me-auto">Success</strong>
+            <button type="button" class="btn-close" (click)="successMsg = false" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            User created successfully
+        </div>
+    </div>
+
+
 
 </mat-dialog-content>
-
-
-
-
-<mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close>Close</button>
-    <button mat-button [mat-dialog-close]="true" cdkFocusInitial>dfdf</button>
-</mat-dialog-actions>

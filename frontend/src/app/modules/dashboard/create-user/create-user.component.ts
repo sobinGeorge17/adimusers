@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from '../../../services/api/api.service';
-import { error } from 'console';
+import { HttpErrorResponse } from '@angular/common/http';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-create-user',
@@ -12,9 +14,16 @@ export class CreateUserComponent {
 
   private endPoint = 'admin/users'
   private token = localStorage.getItem('token')
-  constructor(private fb :FormBuilder ,private registerService:ApiService){}
   hide1 = true
-  hide2=true
+  hide2 = true
+  errorMessage!: string
+  successMsg = false
+
+
+  constructor(private fb: FormBuilder, private registerService: ApiService,
+    private snackBar: MatSnackBar, private dialogRef: MatDialogRef<CreateUserComponent>) { }
+  
+
 
   registrationForm = this.fb.group(
     {
@@ -22,7 +31,7 @@ export class CreateUserComponent {
       lastName: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       role: ['', [this.roleValidator]],
-      password1: ['', [Validators.required]],
+      password1: ['', [Validators.required, Validators.minLength(8), Validators.pattern('^[a-zA-Z0-9]{3,30}$')]],
       password: ['', [Validators.required]]
     },
     {
@@ -32,22 +41,22 @@ export class CreateUserComponent {
   get role() {
     return this.registrationForm.get('role')
   }
-  get firstName(){
+  get firstName() {
     return this.registrationForm.get('firstName')
   }
-  get lastName(){
+  get lastName() {
     return this.registrationForm.get('lastName')
   }
-  get email(){
+  get email() {
     return this.registrationForm.get('email')
   }
-  get password1(){
+  get password1() {
     return this.registrationForm.get('password1')
   }
-  get password2() {
+  get password() {
     return this.registrationForm.get('password')
   }
-  
+
 
   roleValidator(control: AbstractControl): { [key: string]: boolean } | null {
     if (!control.value) {
@@ -60,10 +69,10 @@ export class CreateUserComponent {
   passwordMatchValidator(form: FormGroup) {
     const password1 = form.get('password1')
     const password2 = form.get('password')
-    if (password1 && password2 && password1.value !== password2.value && password2.value !=='') {
+    if (password1 && password2 && password1.value !== password2.value && password2.value !== '') {
       password2?.setErrors({ passwordMismatch: true })
     } else {
-      password2?.setErrors(null)
+      // password2?.setErrors(null)
     }
 
   }
@@ -72,20 +81,44 @@ export class CreateUserComponent {
   submitForm() {
     if (this.registrationForm.valid) {
       // console.log(this.registrationForm.value);
-      const {password1,...formData} = this.registrationForm.value
+      const { password1, ...formData } = this.registrationForm.value
       console.log(formData);
-      
-      this.registerService.posts(formData,this.endPoint,this.token).subscribe((res)=>{
-        console.log(res);
-      },(error)=>{
-        console.log(error,"eror");
-        
+
+      this.registerService.posts(formData, this.endPoint, this.token).subscribe((res: any) => {
+        if (res?.status === 'true') {
+          this.successMsg = true
+          this.openSuccessSnackBar('User created successfully');
+          this.dialogRef.close();
+        }
+      }, (error: HttpErrorResponse) => {
+        if (error?.status === 401 || error?.status === 403 || error?.status === 422
+          || error?.status === 400 || error?.status === 409 || error?.status === 500) {
+          this.errorMessage = error.error.data.error.message
+        } else {
+          this.errorMessage = "an error occured , please try again later"
+        }
       })
     } else {
       this.registrationForm.markAllAsTouched()
     }
   }
+  openSuccessSnackBar(message: string) {
+    this.snackBar.open(message, 'Close', {
+      duration: 4000, // 5 seconds
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+      panelClass: ['success-snackbar']
+    });
+  }
 
+  // openErrorSnackBar(message: string) {
+  //   this.snackBar.open(message, 'Close', {
+  //     duration: 5000, // 5 seconds
+  //     horizontalPosition: 'center',
+  //     verticalPosition: 'top',
+  //     panelClass: ['error-snackbar'] // Optional custom styling
+  //   });
+  // }
 
 
 }
