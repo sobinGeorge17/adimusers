@@ -1,36 +1,37 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, OnInit, Output, } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from '../../../services/api/api.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-create-user',
   templateUrl: './create-user.component.html',
   styleUrl: './create-user.component.css'
 })
-export class CreateUserComponent {
+export class CreateUserComponent  {
 
   private endPoint = 'admin/users'
   private token = localStorage.getItem('token')
+  userForm!:FormGroup
   hide1 = true
   hide2 = true
   errorMessage!: string
   successMsg = false
 
 
-  constructor(private fb: FormBuilder, private registerService: ApiService,
-    private snackBar: MatSnackBar, private dialogRef: MatDialogRef<CreateUserComponent>) { }
-  
-
+  constructor(private fb: FormBuilder, private apiService: ApiService,
+    private snackBar: MatSnackBar, private dialogRef: MatDialogRef<CreateUserComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: { user: any, isEdit: boolean }
+  ) { }
 
   registrationForm = this.fb.group(
     {
-      firstName: ['', [Validators.required]],
-      lastName: ['', [Validators.required]],
-      email: ['', [Validators.required, Validators.email]],
-      role: ['', [this.roleValidator]],
+      firstName: [this.data?.user?.firstName, [Validators.required]],
+      lastName: [this.data?.user?.lastName, [Validators.required]],
+      email: [this.data?.user?.email, [Validators.required, Validators.email]],
+      role: [this.data?.user?.role, [this.roleValidator]],
       password1: ['', [Validators.required, Validators.minLength(8), Validators.pattern('^[a-zA-Z0-9]{3,30}$')]],
       password: ['', [Validators.required]]
     },
@@ -56,7 +57,7 @@ export class CreateUserComponent {
   get password() {
     return this.registrationForm.get('password')
   }
-
+ 
 
   roleValidator(control: AbstractControl): { [key: string]: boolean } | null {
     if (!control.value) {
@@ -76,7 +77,13 @@ export class CreateUserComponent {
     }
 
   }
-
+  
+  //update form
+  updateForm(){
+    const userId = this.data.user.id
+    const {password1,password,...formData} = this.registrationForm.value
+    this.apiService.put(`${this.endPoint}/${userId}`,this.token,formData)
+  }
 
   submitForm() {
     if (this.registrationForm.valid) {
@@ -84,7 +91,7 @@ export class CreateUserComponent {
       const { password1, ...formData } = this.registrationForm.value
       console.log(formData);
 
-      this.registerService.posts(formData, this.endPoint, this.token).subscribe((res: any) => {
+      this.apiService.post(formData, this.endPoint, this.token).subscribe((res: any) => {
         if (res?.status === 'true') {
           this.successMsg = true
           this.openSuccessSnackBar('User created successfully');
@@ -102,6 +109,7 @@ export class CreateUserComponent {
       this.registrationForm.markAllAsTouched()
     }
   }
+
   openSuccessSnackBar(message: string) {
     this.snackBar.open(message, 'Close', {
       duration: 4000, // 5 seconds

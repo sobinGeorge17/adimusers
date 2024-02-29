@@ -12,6 +12,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HeadsectionComponent } from '../../components/headsection/headsection.component';
 import { CreateUserComponent } from './create-user/create-user.component';
 import { UserHomeComponent } from './user-home/user-home.component';
+import { DeleteUserComponent } from './delete-user/delete-user.component';
 
 
 
@@ -27,6 +28,7 @@ import { UserHomeComponent } from './user-home/user-home.component';
     HeadsectionComponent,
     CreateUserComponent,
     UserHomeComponent,
+    DeleteUserComponent,
   
    
    

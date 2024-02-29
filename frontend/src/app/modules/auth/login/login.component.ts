@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export class LoginComponent {
+export class LoginComponent  {
   hide = true;
 
   errorMessage: string = ''
@@ -18,9 +18,11 @@ export class LoginComponent {
 
   constructor(private fb: FormBuilder, private authservice: ApiService , private router:Router) { }
 
+
+
   loginform = this.fb.group(
     {
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.email,Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]],
       password: ['', [Validators.required, Validators.minLength(8), Validators.pattern('^[a-zA-Z0-9]{3,30}$')]]
     }
   )

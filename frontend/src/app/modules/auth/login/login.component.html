@@ -16,6 +16,8 @@
                             required</mat-error>
                         <mat-error *ngIf="loginform.get('email')?.hasError('email')">Please enter a valid email
                             address</mat-error>
+                            <mat-error *ngIf="loginform.get('email')?.hasError('pattern')">Please enter a valid email
+                                address</mat-error>
                     </mat-form-field>
                     <div class="mb-3">
                         <label>Password</label>

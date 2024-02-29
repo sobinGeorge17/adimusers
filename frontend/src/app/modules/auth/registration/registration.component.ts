@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from '../../../services/api/api.service';
 import { error } from 'console';
+import { Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-registration',
@@ -9,10 +12,13 @@ import { error } from 'console';
   styleUrl: './registration.component.css'
 })
 export class RegistrationComponent {
-  constructor(private fb: FormBuilder, private apiService: ApiService) { }
+  constructor(private fb: FormBuilder, private apiService: ApiService,
+    private router:Router,private snackBar:MatSnackBar) { }
+
   hide1 = true
   hide2 = true
   endPoint = 'agents'
+  errorMessage!:string
 
   registrationForm = this.fb.group({
     firstName: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]+$')]],
@@ -69,16 +75,31 @@ export class RegistrationComponent {
     if (this.registrationForm.valid) {
       console.log(this.registrationForm.value);
       const { password1, ...formData } = this.registrationForm.value
-      console.log(formData);
-
       this.apiService.post(formData, this.endPoint,).subscribe((res) => {
-        console.log(res);
-      }, (error) => {
-        console.log(error);
+        this.openSuccessSnackBar("Account Created Successfully")
+        this.router.navigate([''])
+      }, (error:HttpErrorResponse) => {
+        // console.log(error);
+        if (error?.status === 404 || error?.status === 405 || error?.status === 409
+          || error?.status === 422 || error?.status === 500) {
+          this.errorMessage = error.error.data.error.message
+        } else {
+          this.errorMessage = "an error occured , please try again later"
+        }
       })
     } else {
       this.registrationForm.markAllAsTouched()
     }
+  }
+
+
+  openSuccessSnackBar(message: string) {
+    this.snackBar.open(message, 'Close', {
+      duration: 4000, // 5 seconds
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+      panelClass: ['success-snackbar']
+    });
   }
 
 }

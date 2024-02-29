@@ -2,6 +2,11 @@
     <form class="col-md-6 p-5 bg-light rounded customForm1" [formGroup]="registrationForm" (ngSubmit)="submitForm()">
         <h1 class="text-center mb-4">Create Account</h1>
         <hr>
+        <div class="error-message customError" *ngIf="errorMessage">
+            <p class="alert alert-danger custompara" role="alert">
+                {{ errorMessage }}
+            </p>
+        </div>
 
         <div class="row mb-3">
             <div class="col">
@@ -10,8 +15,8 @@
                     <input matInput formControlName="firstName" placeholder="Enter your first name" type="text">
                     <mat-error *ngIf="firstName?.hasError('required')">First name is
                         required</mat-error>
-                        <mat-error *ngIf="firstName?.hasError('pattern')">Enter a valid name
-                            </mat-error>
+                    <mat-error *ngIf="firstName?.hasError('pattern')">Enter a valid name
+                    </mat-error>
                 </mat-form-field>
             </div>
             <div class="col">
@@ -20,8 +25,8 @@
                     <input matInput formControlName="lastName" placeholder="Enter your last name">
                     <mat-error *ngIf="lastName?.hasError('required')">Last name is
                         required</mat-error>
-                        <mat-error *ngIf="lastName?.hasError('pattern')">Enter a valid name
-                        </mat-error>
+                    <mat-error *ngIf="lastName?.hasError('pattern')">Enter a valid name
+                    </mat-error>
                 </mat-form-field>
             </div>
         </div>
@@ -42,8 +47,8 @@
                         formControlName="password1" required>
                     <mat-icon matSuffix (click)="hide1 = !hide1">{{hide1 ? 'visibility_off' : 'visibility'}}</mat-icon>
                     <mat-error *ngIf="password1?.hasError('required')">Password is required</mat-error>
-                    <mat-error *ngIf="password1?.hasError('minLength')">Password is required</mat-error>
-                    <mat-error *ngIf="password1?.hasError('pattern')">Password is required</mat-error>
+                    <mat-error *ngIf="password1?.hasError('minLength')"> a minimum length of 8 is required</mat-error>
+                    <mat-error *ngIf="password1?.hasError('pattern')">Enter valid password</mat-error>
 
                 </mat-form-field>
             </div>
@@ -54,11 +59,12 @@
                         formControlName="password" required>
                     <mat-icon matSuffix (click)="hide2 = !hide2">{{hide2 ? 'visibility_off' : 'visibility'}}</mat-icon>
                     <mat-error *ngIf="password2?.hasError('required')">Confirm password is required</mat-error>
-                    <mat-error *ngIf="password2?.hasError('passwordMismatch') && (password2?.touched)">Passwords do not match</mat-error>
+                    <mat-error *ngIf="password2?.hasError('passwordMismatch') && (password2?.touched)">Passwords do not
+                        match</mat-error>
                 </mat-form-field>
             </div>
         </div>
-        
+
 
         <!-- <div class="mb-3">
             <label class="form-label">Role :

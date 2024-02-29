@@ -9,19 +9,29 @@ import { environment } from '../../../environments/environment';
 export class ApiService {
 
   constructor(private http: HttpClient) { }
-  // api = 'http://localhost:3000/api/auth/login'
-  // private endPoint  = 'auth/login'
   api = environment?.baseurl
 
   // for login 
-  post(data: object, endPoint: string) {
-    const url = `${this.api}${endPoint}`
-    // console.log(url);
-    return this.http.post(url, data)
+  // post(data: object, endPoint: string) {
+  //   const url = `${this.api}${endPoint}`
+  //   // console.log(url);
+  //   return this.http.post(url, data)
+  // }
+
+  // get method
+  get(endpoint: string, token?: any) {
+    const url = `${this.api}${endpoint}`
+    const headers = new HttpHeaders(
+      {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    )
+    return this.http.get(url, { headers: headers })
   }
 
-  // to create user
-  posts(data: object, endpoint: string, token?: any) {
+  // post method
+  post(data: object, endpoint: string, token?: any) {
     const url = `${this.api}${endpoint}`
     const headers = new HttpHeaders(
       {
@@ -32,8 +42,8 @@ export class ApiService {
     return this.http.post(url, data, { headers: headers })
   }
 
-  // to list the users
-  get(endpoint:string,token?:any){
+  // delete method
+  delete(endpoint: string, token?: any) {
     const url = `${this.api}${endpoint}`
     const headers = new HttpHeaders(
       {
@@ -41,6 +51,19 @@ export class ApiService {
         'Authorization': `Bearer ${token}`
       }
     )
-    return this.http.get(url,{headers:headers})
+    return this.http.delete(url, { headers: headers })
   }
+
+  //put method
+  put(endpoint:string,token:any,data:object){
+    const url = `${this.api}${endpoint}`
+    const headers = new HttpHeaders(
+      {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    )
+    return this.http.put(url,data,{headers:headers})
+  }
+  
 }
