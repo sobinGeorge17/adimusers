@@ -6,5 +6,6 @@ import { Component } from '@angular/core';
   styleUrl: './user-home.component.css'
 })
 export class UserHomeComponent {
+  role = localStorage.getItem('role')
 
 }

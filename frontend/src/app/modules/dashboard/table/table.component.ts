@@ -7,6 +7,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteUserComponent } from '../delete-user/delete-user.component';
 import { CreateUserComponent } from '../create-user/create-user.component';
+import { CommonService } from '../../../services/common/common.service';
 
 export interface UserData {
   id: number;
@@ -32,14 +33,18 @@ export class TableComponent implements AfterViewInit, OnInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private service: ApiService, private snackBar: MatSnackBar, public dialog: MatDialog) { }
+  constructor(private service: ApiService, 
+    private snackBar: MatSnackBar, 
+    public dialog: MatDialog, private commonService : CommonService) { }
 
   ngOnInit(): void {
     this.fetchData()
+  
   }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
+   
   }
 
   fetchData() {
@@ -50,6 +55,7 @@ export class TableComponent implements AfterViewInit, OnInit {
       } else {
         console.error('Failed to fetch users:', res.message);
       }
+      
     }, (error: HttpErrorResponse) => {
       if (error?.status === 400 || error?.status === 401 || error?.status === 403 ||
         error?.status === 404 || error?.status === 500) {
@@ -68,7 +74,6 @@ export class TableComponent implements AfterViewInit, OnInit {
   }
 
   editUser(user: UserData) {
-    console.log('Editing user:', user);
     const dialogRef = this.dialog.open(CreateUserComponent,{
       width:'auto',
       data:{user,isEdit:true} // pass user data and isedit flag

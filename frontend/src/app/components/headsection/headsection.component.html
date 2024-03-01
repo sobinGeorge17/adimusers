@@ -1,34 +1,23 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary custonedit">
     <div class="container-fluid customNavbar">
-        <h1 class="navbar-brand customh2 mt-3 " href="">Admin Home</h1>
+        <h1 class="navbar-brand customh2 mt-3 " href="">{{roledata}} Home</h1>
         <i class="fa fa-bars ms-5 customh1 fa-lg" (click)="toggleSidenav()" aria-hidden="true"></i>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-            <form class="d-flex">
-                <div class="input-group">
-                    <input class="form-control " type="search" placeholder="Search for.." aria-label="Search">
-                    <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i></button>
-                </div>
-            </form>
+         
             <div class="btn-group ms-2">
                 <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
 
-                    <i class="fas fa-user " style="color: white;"></i>
+                    <i class="fas fa-user fa-lg" style="color: white;"></i>
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end">
-                    <li><a class="dropdown-item" href="#">Action</a></li>
                     <li>
-                        <hr class="dropdown-divider">
+                        <button mat-button (click)="openDialog()">LogOut</button>
+
                     </li>
-                    <li><a class="dropdown-item" href="#">Settings</a></li>
-                    <li><a class="dropdown-item" href="#">Activity Log</a></li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-                    <li><a class="dropdown-item" (click)="logout()">Logout</a></li>
                 </ul>
             </div>
         </div>

@@ -9,6 +9,7 @@ import { MaterialModule } from '../material/material.module';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { ProgressSpinnerComponent } from '../../components/progress-spinner/progress-spinner.component';
 
 
 
@@ -17,7 +18,8 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
   declarations: [
     LoginComponent,
     RegistrationComponent,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
+    ProgressSpinnerComponent
   ],
   imports: [
     CommonModule,

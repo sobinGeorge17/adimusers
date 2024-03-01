@@ -13,6 +13,7 @@ import { HeadsectionComponent } from '../../components/headsection/headsection.c
 import { CreateUserComponent } from './create-user/create-user.component';
 import { UserHomeComponent } from './user-home/user-home.component';
 import { DeleteUserComponent } from './delete-user/delete-user.component';
+import { SupervisorComponent } from './supervisor/supervisor.component';
 
 
 
@@ -29,6 +30,7 @@ import { DeleteUserComponent } from './delete-user/delete-user.component';
     CreateUserComponent,
     UserHomeComponent,
     DeleteUserComponent,
+    SupervisorComponent,
   
    
    

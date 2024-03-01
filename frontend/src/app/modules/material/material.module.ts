@@ -11,6 +11,8 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatSelectModule} from '@angular/material/select';
 import {MatCardModule } from '@angular/material/card';
 import {MatDialogModule} from '@angular/material/dialog'
+import { MatRadioModule } from '@angular/material/radio';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner'
 
 
 @NgModule({
@@ -27,9 +29,9 @@ import {MatDialogModule} from '@angular/material/dialog'
     MatSidenavModule,
     MatSelectModule,
     MatCardModule,
-    MatDialogModule
-    
-
+    MatDialogModule,
+    MatRadioModule,
+    MatProgressSpinnerModule
   ],
   exports:[
     MatButtonModule,
@@ -42,7 +44,8 @@ import {MatDialogModule} from '@angular/material/dialog'
     MatSidenavModule,
     MatSelectModule,
     MatCardModule,
-    MatDialogModule 
+    MatDialogModule ,
+    MatProgressSpinnerModule
   ]
 })
 export class MaterialModule { }

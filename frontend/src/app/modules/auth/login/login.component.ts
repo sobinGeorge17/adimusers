@@ -12,9 +12,9 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent  {
   hide = true;
-
   errorMessage: string = ''
   private endPoint  = 'auth/login'
+  isLoading =false
 
   constructor(private fb: FormBuilder, private authservice: ApiService , private router:Router) { }
 
@@ -29,19 +29,26 @@ export class LoginComponent  {
 
   login() {
     if (this.loginform.valid) {
+      this.isLoading = true
       this.authservice.post(this.loginform.value,this.endPoint).subscribe((response: any) => {
         if (response.status == "true") {
           console.log("login sucess");
-          if(response.data.user?.accessToken){
+          if(response?.data.user?.accessToken){
             localStorage.setItem('token',response.data.user?.accessToken)
           }
-          if(response.data.user?.role){
+          if(response?.data?.user?.role){
             localStorage.setItem('role',response.data.user?.role)
           }
-          if(response.data.user?.role === 'admin'){
-            this.router.navigate(['/dashboard'])
-          }else{
-            this.router.navigate(['/dashboard/users'])
+          switch (response?.data?.user?.role) {
+            case 'admin':
+              this.router.navigate(['/dashboard']);
+              break;
+            case 'supervisor':
+              this.router.navigate(['/dashboard/supervisor']);
+              break;
+            default:
+              this.router.navigate(['/dashboard/users']);
+              break;
           }
         }
       }, (error: HttpErrorResponse) => {
@@ -50,6 +57,8 @@ export class LoginComponent  {
         }else{
           this.errorMessage = "an error occured , please try again later"
         }
+      }).add(() => {
+        this.isLoading = false; // Hide spinner after API call completes
       });
     }
   }

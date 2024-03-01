@@ -1,6 +1,7 @@
 <div class=" customcontainer">
     <div class="row">
         <div class="col-md-6">
+            <app-progress-spinner [show]="isLoading"></app-progress-spinner>
             <form class="customform" [formGroup]="loginform" (ngSubmit)="login()">
                 <div class="customHead">
                     <h1 class="text-center">Login</h1>
@@ -9,8 +10,7 @@
                 <div class="customFormInput">
                     <label>Email</label>
                     <mat-form-field style="width: 100%">
-                        <!-- <mat-icon matPrefix color="primary">email</mat-icon> -->
-                        <!-- <mat-label>Email</mat-label> -->
+                      
                         <input matInput formControlName="email" placeholder="Enter email address">
                         <mat-error *ngIf="loginform.get('email')?.hasError('required')">Email is
                             required</mat-error>
@@ -22,14 +22,12 @@
                     <div class="mb-3">
                         <label>Password</label>
                         <mat-form-field style="width: 100%;">
-                            <!-- <mat-icon matPrefix color="primary">lock</mat-icon>
-                            <mat-label>Password</mat-label> -->
+                         
                             <input matInput placeholder="Password" [type]="hide ? 'password' : 'text'"
                                 formControlName="password" required>
                             <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' :
                                 'visibility'}}</mat-icon>
-                            <!-- <input matInput type="password" formControlName="password"
-                                    placeholder="Enter your password"> -->
+                   
                             <mat-error *ngIf="loginform.get('password')?.hasError('required')">Password is
                                 required</mat-error>
                             <mat-error *ngIf="loginform.get('password')?.hasError('minlength')">Password must have
@@ -42,10 +40,7 @@
                         </mat-form-field>
 
                     </div>
-                    <!-- <div class="mb-3 form-check">
-                        <input type="checkbox" class="form-check-input" id="remember">
-                        <label class="form-check-label" for="remember">Remember password</label>
-                    </div> -->
+                 
                     <div class="d-flex align-items-center justify-content-between">
                         <div class="mb-3">
                             <p class="mb-0"><a href="" [routerLink]="['forgot/password']">Forgot Password?</a></p>
@@ -69,4 +64,5 @@
         </div>
 
     </div>
-</div>
+   
+</div> 

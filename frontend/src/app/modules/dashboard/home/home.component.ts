@@ -7,6 +7,7 @@ import { MatSidenav } from '@angular/material/sidenav';
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
+  role = localStorage.getItem('role')
 
   @ViewChild('sidenav') sidenav!:MatSidenav
   
