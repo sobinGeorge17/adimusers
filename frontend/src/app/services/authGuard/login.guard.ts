@@ -7,7 +7,7 @@ export const loginGuard: CanActivateFn = (route, state) => {
   const token = localStorage.getItem('token')
   const role = localStorage.getItem('role')
 
-  if(token && role === 'admin'){
+  if(token && role === 'admin' || role === 'supervisor'){
     router.navigate(['/dashboard'])
     return false
   }else{

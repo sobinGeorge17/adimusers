@@ -1,15 +1,12 @@
 <div class="container customcontainer">
     <div>
         <mat-dialog-actions>
-            <button ><h1>Dashboard</h1></button>
+            <button [ngClass]="{'active':activeTab === 'dashboard'}" ><h3><i class="fa fa-table" aria-hidden="true"></i> Dashboard</h3></button>
           </mat-dialog-actions>
     </div>
-    <div>
+    <div *ngIf="role === 'admin' ? true : false">
       <mat-dialog-actions>
-        <button (click)="openDialog()"><h1>Create User</h1></button>
+        <button (click)="openDialog()" [ngClass]="{'active':activeTab === 'createuser'}"><h3><i class="fa fa-user-plus" aria-hidden="true"></i> Create User</h3></button>
       </mat-dialog-actions>
-
     </div>
- 
-
 </div>

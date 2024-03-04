@@ -1,0 +1,67 @@
+mat-sidenav-container {
+    height: 100%;
+
+}
+
+mat-sidenav mat-sidenav-content {
+    padding: 16px;
+}
+
+mat-sidenav {
+    background-color: #212529;
+}
+
+.example-header-image {
+    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+    background-size: cover;
+}
+
+.center-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+}
+
+.example-card {
+    max-width: 400px;
+    width: 100%;
+}
+
+.example-header-image {
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    overflow: hidden;
+    position: relative;
+}
+
+.example-header-image img {
+    width: 100%;
+    height: auto;
+}
+
+.edit-icon {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+}
+
+.example-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.example-full-width {
+    width: 100%;
+}
+mat-card-actions{
+    justify-content: center;
+}

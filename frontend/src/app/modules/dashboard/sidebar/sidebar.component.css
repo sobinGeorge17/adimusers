@@ -12,3 +12,10 @@ button{
 button:hover{
     color: white;
 }
+
+button.active {
+    
+    color: white;
+ 
+}
+  

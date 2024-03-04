@@ -20,7 +20,8 @@ export class HeadsectionComponent {
   }
   openDialog(){
     let dialogRef = this.dialog.open(LogoutDialogComponent,
-      {width:'400px'})
+      {width:'auto',
+    data:{message:"Are you sure you want to log out?",title:'Confirm Logout ?',action:'logout'}})
 
     dialogRef.afterClosed().subscribe(result=>{
       if(result){

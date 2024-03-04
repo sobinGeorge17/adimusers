@@ -24,10 +24,10 @@ export class CreateUserComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private apiService: ApiService,
-    private commonService:CommonService,
+    private commonService: CommonService,
     private snackBar: MatSnackBar,
     private dialogRef: MatDialogRef<CreateUserComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { user: any, isEdit: boolean } 
+    @Inject(MAT_DIALOG_DATA) public data: { user: any, isEdit: boolean }
   ) { }
 
   ngOnInit(): void {
@@ -37,9 +37,9 @@ export class CreateUserComponent implements OnInit {
 
   initForm() {
     this.userForm = this.fb.group({
-      firstName: [this.data?.user?.firstName, [Validators.required,Validators.pattern('^[a-zA-Z ]+$')]],
-      lastName: [this.data?.user?.lastName, [Validators.required,Validators.pattern('^[a-zA-Z ]+$')]],
-      email: [this.data?.user?.email, [Validators.required, Validators.email,Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]],
+      firstName: [this.data?.user?.firstName, [Validators.required, Validators.pattern('^[a-zA-Z ]+$')]],
+      lastName: [this.data?.user?.lastName, [Validators.required, Validators.pattern('^[a-zA-Z ]+$')]],
+      email: [this.data?.user?.email, [Validators.required, Validators.email, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]],
       role: [this.data?.user?.role, [this.roleValidator]],
       password1: ['', [Validators.required, Validators.minLength(8), Validators.pattern('^[a-zA-Z0-9]{3,30}$')]],
       password: ['', [Validators.required]]
@@ -88,19 +88,21 @@ export class CreateUserComponent implements OnInit {
       password2?.setErrors(null);
     }
   }
-
+ 
+  // edit the user
   updateForm() {
     if (this.userForm.valid && this.isUpdate) {
       const userId = this.data?.user?.id;
       const { password1, ...formData } = this.userForm.value;
       this.apiService.put(`${this.endPoint}/${userId}`, this.token, formData).subscribe(
-        (response:any) => {
-          if(response?.status === "true"){
-            this.commonService.userSubject.next(response)
+        (response: any) => {
+          console.log(response);
+          if (response?.status === "true") {
+            this.commonService.userSubject.next(true)
             this.openSuccessSnackBar('updated successfully');
             this.dialogRef.close();
           }
-        },(error: HttpErrorResponse) => {
+        }, (error: HttpErrorResponse) => {
           if (
             error?.status === 400 ||
             error?.status === 401 ||
@@ -119,14 +121,15 @@ export class CreateUserComponent implements OnInit {
       );
     }
   }
-
+  
+  // create the user
   submitForm() {
     if (this.userForm.valid && !this.isUpdate) {
       const { password1, ...formData } = this.userForm.value;
       this.apiService.post(formData, this.endPoint, this.token).subscribe(
         (res: any) => {
-          if (res?.status === 'true') {   
-            this.commonService.userSubject.next(res)
+          if (res?.status === 'true') {
+            this.commonService.userSubject.next(true)
             this.successMsg = true;
             this.openSuccessSnackBar('User created successfully');
             this.dialogRef.close();
@@ -151,7 +154,8 @@ export class CreateUserComponent implements OnInit {
       this.userForm.markAllAsTouched();
     }
   }
-
+  
+  // to display success message
   openSuccessSnackBar(message: string) {
     this.snackBar.open(message, 'Close', {
       duration: 4000,

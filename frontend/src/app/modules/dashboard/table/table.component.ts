@@ -5,9 +5,10 @@ import { ApiService } from '../../../services/api/api.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
-import { DeleteUserComponent } from '../delete-user/delete-user.component';
+
 import { CreateUserComponent } from '../create-user/create-user.component';
 import { CommonService } from '../../../services/common/common.service';
+import { LogoutDialogComponent } from '../../../components/logout-dialog/logout-dialog.component';
 
 export interface UserData {
   id: number;
@@ -23,11 +24,13 @@ export interface UserData {
   styleUrls: ['./table.component.css']
 })
 export class TableComponent implements AfterViewInit, OnInit {
-  endpoint = 'admin/users';
+  endpoint =''
+  isAdmin = false
   data: UserData[] = [];
   token = localStorage.getItem('token');
   errorMessage!: string
-
+  role!:any
+  
   displayedColumns: string[] = ['id', 'firstName', 'lastName', 'email', 'role', 'edit', 'delete'];
   dataSource = new MatTableDataSource<UserData>(this.data);
 
@@ -38,8 +41,15 @@ export class TableComponent implements AfterViewInit, OnInit {
     public dialog: MatDialog, private commonService : CommonService) { }
 
   ngOnInit(): void {
+    
+    this.checkRole()
     this.fetchData()
-  
+    this.commonService.userSubject.subscribe((res:any)=>{
+      const user = res
+      if(user){
+        this.fetchData()
+      }
+    })
   }
 
   ngAfterViewInit() {
@@ -72,7 +82,15 @@ export class TableComponent implements AfterViewInit, OnInit {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
-
+   // checkRole
+    checkRole(){
+    const userRole = localStorage.getItem('role')
+    this.isAdmin = userRole === 'admin'
+    if(!this.isAdmin){
+      this.displayedColumns = this.displayedColumns.splice(0,5)
+    }
+    this.endpoint = this.isAdmin ? 'admin/users' :'supervisor/users'
+   }
   editUser(user: UserData) {
     const dialogRef = this.dialog.open(CreateUserComponent,{
       width:'auto',
@@ -105,9 +123,9 @@ export class TableComponent implements AfterViewInit, OnInit {
   // }
 
   deleteUser(user: UserData) {
-    const dialogRef = this.dialog.open(DeleteUserComponent, {
-      width: '400px',
-      data: { userId: user.id }
+    const dialogRef = this.dialog.open(LogoutDialogComponent, {
+      width: 'auto',
+      data: { message:'Are you sure you want to delete this user ?',title:'Delete User',action:'delete',userId:user.id }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result === true) {
@@ -116,6 +134,9 @@ export class TableComponent implements AfterViewInit, OnInit {
         this.dataSource.data = this.data
         this.openSuccessSnackBar('User deleted successfully');
       }
+    },(error)=>{
+      console.log(error,'deleteerror');
+      
     });
 
   }

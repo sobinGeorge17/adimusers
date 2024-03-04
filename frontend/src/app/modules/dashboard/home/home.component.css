@@ -5,27 +5,11 @@ mat-sidenav-container {
 
 mat-sidenav mat-sidenav-content {
     padding: 16px;
-
 }
 
 mat-sidenav {
     background-color: #212529;
 }
-
-/* .customul {
-    background-color: #343a40;
-    color: white;
-} */
-/* 
-.customcontent {
-    margin-top: 50px;
-} */
-/* .customsidebar1{
-    position: absolute;
-    top: 0px;
-} */
-/* .custonedit {
-    position: sticky;
-    top: 0px;
-    z-index: 999;
-} */
+mat-sidenav-content{
+    height: 550px;
+}

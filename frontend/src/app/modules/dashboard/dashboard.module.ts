@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { DashboardRoutingModule } from './dashboard-routing.module';
-
 import { HomeComponent } from './home/home.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { TableComponent } from './table/table.component';
@@ -12,11 +10,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HeadsectionComponent } from '../../components/headsection/headsection.component';
 import { CreateUserComponent } from './create-user/create-user.component';
 import { UserHomeComponent } from './user-home/user-home.component';
-import { DeleteUserComponent } from './delete-user/delete-user.component';
-import { SupervisorComponent } from './supervisor/supervisor.component';
-
-
-
 
 
 
@@ -28,12 +21,7 @@ import { SupervisorComponent } from './supervisor/supervisor.component';
     NavbarComponent,
     HeadsectionComponent,
     CreateUserComponent,
-    UserHomeComponent,
-    DeleteUserComponent,
-    SupervisorComponent,
-  
-   
-   
+    UserHomeComponent
   ],
   imports: [
     CommonModule,

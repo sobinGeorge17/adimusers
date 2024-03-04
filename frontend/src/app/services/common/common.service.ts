@@ -6,7 +6,7 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class CommonService {
   
-  userSubject = new BehaviorSubject([])
+  userSubject = new BehaviorSubject<boolean>(false)
   constructor() { }
 
 }
