@@ -1,55 +1,60 @@
 <app-headsection [roledata]="role" (sidenavToggle)="toggleSidenav()"></app-headsection>
 <mat-sidenav-container>
-    <mat-sidenav #sidenav mode="side" class="customsidebar1">
-        <div class="container">
-            <app-sidebar></app-sidebar>
-        </div>
-    </mat-sidenav>
-    <mat-sidenav-content class="customcontent">
-        <div class="center-container">
-           
-            <mat-card class="example-card">
-              <mat-card-header>
-                <div mat-card-avatar class="example-header-image round-image">
-                  <img src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
-                  <button mat-icon-button class="edit-icon" aria-label="Edit" >
-                    <mat-icon >edit</mat-icon>
-                  </button>
-                </div>
-                 
-                <mat-card-title>{{ user.firstName }} {{ user.lastName }}</mat-card-title>
-                <mat-card-subtitle>Profile</mat-card-subtitle>
-              </mat-card-header>
-              <mat-card-content>
-                <form class="example-form">
-                  <div class="form-row">
-                    <mat-form-field class="example-full-width">
-                      <mat-label>First Name</mat-label>
-                      <input matInput [disabled] = '!displayEditOption' [value]="user.firstName">
-                    </mat-form-field>
-                    <mat-form-field class="example-full-width">
-                      <mat-label>Last Name</mat-label>
-                      <input matInput [disabled] = '!displayEditOption' [value]="user.lastName">
-                    </mat-form-field>
-                  </div>
-                  <mat-form-field class="example-full-width">
-                    <mat-label>Email</mat-label>
-                    <input matInput disabled [value]="user.email">
-                  </mat-form-field>
-                  <mat-form-field class="example-full-width">
-                    <mat-label>ID</mat-label>
-                    <input matInput disabled [value]="user.id">
-                  </mat-form-field>
-                </form>
-              </mat-card-content>
-              <mat-card-actions>
-                <button mat-raised-button color="primary" (click)="editForm()" *ngIf="!displayEditOption">Edit</button>
-                <button mat-raised-button color="warn" class="me-3" *ngIf="displayEditOption" (click)="cancelEdit()">cancel</button>
-                <button mat-raised-button color="primary" *ngIf="displayEditOption">update</button>
-              </mat-card-actions>
-            </mat-card>
-          </div>
-          
+  <mat-sidenav #sidenav mode="side" class="customsidebar1">
+    <div class="container">
+      <app-sidebar></app-sidebar>
+    </div>
+  </mat-sidenav>
+  <mat-sidenav-content class="customcontent">
+    <div class="center-container" *ngIf="user">
+      <mat-card class="example-card">
+        <mat-card-header>
+          <div mat-card-avatar class="example-header-image round-image">
+            <img [src]="profileImage" class="profile-image" alt="Profile ">
 
-    </mat-sidenav-content>
+          <div *ngIf="displayEditOption">
+            <button [disabled]="!displayEditOption" mat-icon-button class="edit-icon" aria-label="Edit"
+            (click)="fileInput.click()">
+            <input #fileInput type="file" (change)="upLoadProfile($event)" style="display: none;">
+
+            <mat-icon class="edit-icon">edit</mat-icon>
+          </button>
+          </div>
+
+
+          </div>
+          <mat-card-title>{{ user.firstName }} {{ user.lastName }}</mat-card-title>
+          <mat-card-subtitle>Profile</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <form class="example-form" [formGroup]="profileDataForm">
+            <div class="form-row">
+              <mat-form-field class="example-full-width">
+                <mat-label>First Name</mat-label>
+                <input matInput formControlName="firstName"  >
+              </mat-form-field>
+              <mat-form-field class="example-full-width">
+                <mat-label>Last Name</mat-label>
+                <input matInput formControlName="lastName" >
+              </mat-form-field>
+            </div>
+            <mat-form-field class="example-full-width">
+              <mat-label>Email</mat-label>
+              <input matInput disabled [value]="user.email">
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+              <mat-label>ID</mat-label>
+              <input matInput disabled [value]="user.id">
+            </mat-form-field>
+          </form>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-raised-button color="primary" (click)="editForm()" *ngIf="!displayEditOption">Edit</button>
+          <button mat-raised-button color="warn" class="me-3" *ngIf="displayEditOption"
+            (click)="cancelEdit()">cancel</button>
+          <button mat-raised-button color="primary" *ngIf="displayEditOption" (click)="updateForm()">update</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </mat-sidenav-content>
 </mat-sidenav-container>

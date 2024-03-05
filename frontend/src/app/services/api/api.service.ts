@@ -31,14 +31,20 @@ export class ApiService {
   }
 
   // post method
-  post(data: object, endpoint: string, token?: any) {
+  // post(data: any, endpoint: any, token?: any) {
+  //   const url = `${this.api}${endpoint}`
+  //   const headers = new HttpHeaders(
+  //     {
+  //       'Content-Type': 'application/json',
+  //       'Authorization': `Bearer ${token}`
+  //     }
+  //   )
+  //   return this.http.post(url, data, { headers: headers })
+  // }
+
+  post(data: any, endpoint: any, token?: any) {
     const url = `${this.api}${endpoint}`
-    const headers = new HttpHeaders(
-      {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      }
-    )
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`)
     return this.http.post(url, data, { headers: headers })
   }
 
@@ -65,5 +71,7 @@ export class ApiService {
     )
     return this.http.put(url,data,{headers:headers})
   }
+
+ 
   
 }
