@@ -9,6 +9,7 @@ import { MaterialModule } from './modules/material/material.module';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -19,7 +20,8 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
     BrowserModule,
     AppRoutingModule, 
     HttpClientModule,
-    MaterialModule
+    MaterialModule,
+   
   ],
   providers: [
     provideClientHydration(),

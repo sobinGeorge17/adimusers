@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import { CreateUserComponent } from '../create-user/create-user.component';
+import { CommonService } from '../../../services/common/common.service';
 
 
 @Component({
@@ -12,10 +13,17 @@ export class SidebarComponent implements OnInit{
   activeTab = 'dashboard'
 
   role!:any
-  constructor(public dialog:MatDialog) {}
+  constructor(public dialog:MatDialog,private commomService:CommonService) {}
 
   ngOnInit(): void {
-    this.role = localStorage.getItem('role')
+    this.decryptRole()
+  }
+
+  decryptRole() {
+    const encryptedRole = localStorage.getItem('role');
+    if (encryptedRole) {
+      this.role = this.commomService.decryptData(encryptedRole);
+    }
   }
 
   openDialog() {

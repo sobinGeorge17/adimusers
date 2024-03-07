@@ -72,6 +72,20 @@ export class ApiService {
     return this.http.put(url,data,{headers:headers})
   }
 
+
+  // patch
+  patch(endpoint:string,token:any,data:object){
+    const url = `${this.api}${endpoint}`
+    const headers = new HttpHeaders(
+      {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    )
+    return this.http.patch(url,data,{headers:headers})
+  }
+
+
  
   
 }

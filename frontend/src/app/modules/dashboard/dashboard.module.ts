@@ -10,6 +10,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HeadsectionComponent } from '../../components/headsection/headsection.component';
 import { CreateUserComponent } from './create-user/create-user.component';
 import { UserHomeComponent } from './user-home/user-home.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 
@@ -21,14 +22,16 @@ import { UserHomeComponent } from './user-home/user-home.component';
     NavbarComponent,
     HeadsectionComponent,
     CreateUserComponent,
-    UserHomeComponent
+    UserHomeComponent,
+  
   ],
   imports: [
     CommonModule,
     DashboardRoutingModule,
     MaterialModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxPaginationModule
   ]
 })
 export class DashboardModule { }

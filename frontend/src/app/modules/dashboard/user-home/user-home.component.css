@@ -53,7 +53,7 @@ mat-card-actions {
 }
 
 .round-image {
-    border-radius: 50%;
+    border-radius: 100%;
     overflow: hidden;
     position: relative;
 }
@@ -78,7 +78,9 @@ mat-card-actions {
     position: absolute;
     bottom: 10px;
     right: 5px;
-    /* background-color: rgba(0, 0, 0, 0.5); */
-    color: rgb(43, 38, 38);
+    /* background-color: rgba(223, 216, 216, 0.5); */
+    color: rgb(230, 224, 224);
 }
+
+
 

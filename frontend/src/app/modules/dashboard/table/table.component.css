@@ -46,3 +46,11 @@
     background-color: #e0e0e0;
     /* Lighter grey on hover */
 }
+
+th,
+td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
